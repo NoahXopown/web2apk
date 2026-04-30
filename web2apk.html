@@ -315,6 +315,1558 @@ select option{background:var(--card);}
 
 .input-wrap{position:relative;}
 .input-wrap i{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:14px;pointer-events:none;transition:color 0.2s;
+}
+.input-wrap input{padding-left:40px;}
+.input-wrap:focus-within i{color:var(--accent);}
+
+/* FILE ZONE */
+.file-zone{
+  border:2px dashed rgba(99,179,255,0.2);
+  border-radius:14px;padding:36px 20px;
+  text-align:center;cursor:pointer;
+  transition:all 0.3s;margin-bottom:14px;
+  position:relative;background:rgba(255,255,255,0.01);
+}
+.file-zone:hover,.file-zone.drag-over{
+  border-color:rgba(59,130,246,0.55);
+  background:rgba(59,130,246,0.05);
+}
+.file-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0;padding:0;border:none;background:none;}
+.file-zone-icon{font-size:34px;margin-bottom:10px;color:var(--accent);}
+.file-zone-title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.file-zone-sub{font-size:12px;color:var(--muted);}
+
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;padding:12px 22px;
+  border:none;border-radius:12px;
+  font-family:var(--font);font-size:14px;font-weight:600;
+  cursor:pointer;transition:all 0.22s;
+  text-decoration:none;position:relative;overflow:hidden;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.09),transparent);
+  pointer-events:none;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+  color:#fff;box-shadow:0 4px 20px rgba(59,130,246,0.38);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,0.52);}
+.btn-primary:active{transform:translateY(0);}
+.btn-purple{
+  background:linear-gradient(135deg,var(--accent3),#6d28d9);
+  color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.38);
+}
+.btn-purple:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,0.52);}
+.btn-green{
+  background:linear-gradient(135deg,var(--green),#16a34a);
+  color:#fff;box-shadow:0 4px 20px rgba(34,197,94,0.38);
+}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(34,197,94,0.48);}
+.btn-secondary{
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);color:var(--text);
+}
+.btn-secondary:hover{background:rgba(255,255,255,0.1);}
+.btn-danger{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);color:var(--red);}
+.btn-full{width:100%;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important;}
+
+/* ─── PROGRESS ─── */
+.progress-wrap{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);border-radius:16px;
+  padding:22px;margin-bottom:14px;display:none;
+}
+.progress-wrap.show{display:block;}
+.progress-status{
+  font-family:var(--font);font-size:13px;font-weight:500;
+  color:var(--accent2);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.progress-bar-track{
+  height:6px;background:rgba(255,255,255,0.06);
+  border-radius:999px;overflow:hidden;margin-bottom:8px;
+}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+  background-size:200% 100%;
+  animation:shimmer 2s linear infinite;
+  border-radius:999px;transition:width 0.5s ease;width:0%;
+  box-shadow:0 0 8px rgba(59,130,246,0.5);
+}
+@keyframes shimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
+.progress-pct{font-family:var(--font);font-size:11px;color:var(--muted);text-align:right;font-weight:500;}
+.spinner{
+  width:14px;height:14px;
+  border:2px solid rgba(6,182,212,0.25);
+  border-top-color:var(--accent2);
+  border-radius:50%;animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ─── RESULT BOX ─── */
+.result-box{
+  background:linear-gradient(135deg,rgba(34,197,94,0.05),rgba(6,182,212,0.03));
+  border:1px solid rgba(34,197,94,0.2);
+  border-radius:14px;padding:18px;margin-bottom:14px;display:none;
+}
+.result-box.show{display:block;animation:fadeUp 0.35s ease both;}
+.result-box.error{background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.2);}
+.result-url{
+  font-family:'Courier New',monospace;font-size:13px;
+  color:var(--green);word-break:break-all;margin-bottom:10px;
+}
+.result-url.err{color:var(--red);}
+.result-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.meta-item{
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;padding:12px;
+}
+.meta-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500;}
+.meta-val{font-family:'Courier New',monospace;font-size:12px;color:var(--text);}
+
+/* ─── CODE BOX ─── */
+.code-wrap{background:#070911;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;display:none;}
+.code-wrap.show{display:block;}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 16px;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+.code-dots{display:flex;gap:6px;}
+.code-dots span{width:10px;height:10px;border-radius:50%;}
+.code-dots span:nth-child(1){background:#ef4444;}
+.code-dots span:nth-child(2){background:#f59e0b;}
+.code-dots span:nth-child(3){background:#22c55e;}
+.code-filename{font-family:'Courier New',monospace;font-size:12px;color:var(--muted);}
+.code-content{
+  padding:18px;font-family:'Courier New',monospace;
+  font-size:12px;line-height:1.65;color:#a5b4fc;
+  white-space:pre-wrap;word-break:break-word;
+  max-height:360px;overflow-y:auto;
+}
+.code-content::-webkit-scrollbar{width:5px;}
+.code-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+
+/* ─── STATS ─── */
+.stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.stat-card{
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  border:1px solid var(--border);border-radius:14px;
+  padding:18px;text-align:center;
+  transition:all 0.2s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,0.07),transparent 70%);
+  pointer-events:none;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.4);}
+.stat-num{
+  font-family:var(--font);font-size:2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:500;}
+
+/* ─── TAGS ─── */
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;padding:3px 10px;border-radius:999px;
+  font-family:var(--font);font-weight:600;
+}
+.tag-blue{background:rgba(59,130,246,0.12);color:var(--accent);border:1px solid rgba(59,130,246,0.2);}
+.tag-green{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.tag-orange{background:rgba(249,115,22,0.12);color:var(--orange);border:1px solid rgba(249,115,22,0.2);}
+.tag-purple{background:rgba(139,92,246,0.12);color:var(--accent3);border:1px solid rgba(139,92,246,0.2);}
+
+/* ─── FEAT LIST ─── */
+.feat-list{display:flex;flex-direction:column;gap:10px;}
+.feat-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px;background:rgba(255,255,255,0.02);
+  border-radius:12px;border:1px solid var(--border);
+  transition:all 0.2s;cursor:default;
+}
+.feat-item:hover{background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);transform:translateX(4px);}
+.feat-num{
+  width:28px;height:28px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-family:var(--font);font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(59,130,246,0.32);
+}
+.feat-text{font-size:13px;line-height:1.65;}
+.feat-text strong{color:var(--text);font-weight:600;}
+.feat-text span{color:var(--muted);}
+
+/* ─── INFO GRID ─── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.info-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);border-radius:12px;
+  padding:16px;transition:all 0.2s;cursor:default;
+}
+.info-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(99,179,255,0.2);}
+.info-card-icon{font-size:20px;margin-bottom:8px;}
+.info-card-title{font-weight:700;font-size:13px;margin-bottom:4px;}
+.info-card-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ─── STEPS ─── */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:14px;padding:14px 0;position:relative;}
+.step:not(:last-child)::after{
+  content:'';position:absolute;
+  left:18px;top:48px;bottom:0;width:2px;
+  background:linear-gradient(to bottom,rgba(59,130,246,0.28),transparent);
+}
+.step-num{
+  width:36px;height:36px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-weight:800;font-size:14px;color:#fff;
+  box-shadow:0 0 18px rgba(59,130,246,0.28);
+  position:relative;z-index:1;
+}
+.step-content{padding-top:6px;}
+.step-title{font-weight:700;font-size:13px;margin-bottom:3px;}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ─── FAQ ─── */
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color 0.2s;}
+.faq-item.open{border-color:rgba(59,130,246,0.3);}
+.faq-q{
+  padding:14px 16px;font-weight:600;font-size:13px;
+  cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;background:rgba(255,255,255,0.02);
+  transition:background 0.2s;user-select:none;
+}
+.faq-q:hover{background:rgba(255,255,255,0.04);}
+.faq-q i{color:var(--muted);transition:transform 0.3s,color 0.2s;flex-shrink:0;}
+.faq-item.open .faq-q i{transform:rotate(180deg);color:var(--accent);}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease,padding 0.3s;
+  font-size:13px;color:var(--muted);line-height:1.7;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 16px 14px;}
+
+/* ─── TECH GRID ─── */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.tech-item{
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:12px;padding:14px;text-align:center;
+  transition:all 0.2s;cursor:default;
+}
+.tech-item:hover{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.25);transform:translateY(-2px);}
+.tech-item i{font-size:22px;margin-bottom:7px;display:block;}
+.tech-item span{font-size:11px;color:var(--muted);font-weight:500;}
+
+/* ─── DOWNLOAD LINK ─── */
+.download-link{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(34,197,94,0.07);
+  border:1px solid rgba(34,197,94,0.2);
+  border-radius:12px;padding:14px;
+  color:var(--green);text-decoration:none;
+  font-weight:600;font-size:14px;
+  transition:all 0.2s;margin-bottom:10px;
+}
+.download-link:hover{background:rgba(34,197,94,0.13);transform:translateY(-2px);}
+
+/* ─── SECTION TITLE ─── */
+.sec-title{
+  font-family:var(--font);font-weight:800;font-size:1.4rem;
+  background:linear-gradient(135deg,#fff,var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:5px;
+}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6;font-weight:400;}
+
+/* ─── DIVIDER ─── */
+.divider{height:1px;background:var(--border);margin:18px 0;}
+
+/* ─── TOAST ─── */
+.toast-wrap{
+  position:fixed;top:72px;right:16px;
+  z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;
+}
+.toast{
+  background:linear-gradient(135deg,var(--card2),var(--card));
+  border:1px solid var(--border);border-radius:12px;
+  padding:12px 16px;font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.5);
+  animation:fadeDown 0.3s ease;
+  pointer-events:all;min-width:200px;max-width:300px;
+}
+.toast.success{border-color:rgba(34,197,94,0.25);}
+.toast.error{border-color:rgba(239,68,68,0.25);}
+.toast.success .t-icon{color:var(--green);}
+.toast.error .t-icon{color:var(--red);}
+.toast.info .t-icon{color:var(--accent);}
+.toast-out{animation:fadeUp 0.3s ease reverse both;}
+
+/* ─── CRAWL RESULT ─── */
+.crawl-result{display:none;margin-bottom:14px;}
+.crawl-result.show{display:block;}
+
+/* ─── CLICK SPARK ─── */
+.click-spark{
+  position:fixed;pointer-events:none;z-index:99999;
+  width:30px;height:30px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  animation:sparkAnim 0.5s ease-out forwards;
+}
+@keyframes sparkAnim{
+  0%{width:0;height:0;opacity:1;box-shadow:0 0 0 0 rgba(59,130,246,0.7);}
+  100%{width:60px;height:60px;opacity:0;box-shadow:0 0 0 30px rgba(59,130,246,0);}
+}
+
+/* ─── RIPPLE ─── */
+.ripple-effect{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  transform:scale(0);animation:rippleAnim 0.6s linear;pointer-events:none;
+}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  .nav-item span{display:none;}
+  .nav-item{padding:8px 10px;font-size:10px;}
+  .hero h1{font-size:1.8rem;}
+  .stats-grid-4{grid-template-columns:repeat(2,1fr);}
+  .info-grid{grid-template-columns:1fr;}
+  .tech-grid{grid-template-columns:repeat(2,1fr);}
+  .result-meta{grid-template-columns:1fr;}
+  .topbar-logo-version{display:none;}
+}
+@media(max-width:400px){
+  .topbar-badge{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- SPARKS -->
+<div id="sparks"></div>
+
+<!-- ════ TOPBAR (atas) ════ -->
+<header class="topbar" id="topbar">
+  <a class="topbar-logo" href="#" onclick="switchSection('home');return false;">
+    <div class="topbar-logo-icon"><i class="fa-solid fa-rocket"></i></div>
+    <span class="topbar-logo-text">Web2APK</span>
+    <span class="topbar-logo-version">v3.0</span>
+  </a>
+
+  <div class="topbar-spacer"></div>
+
+  <div class="topbar-right">
+    <div class="topbar-badge">
+      <div class="pulse-dot"></div>
+      <span>ONLINE</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO ════ -->
+<div class="hero">
+  <div class="hero-badge"><div class="pulse-dot"></div>Web2APK Pro Platform — v3.0</div>
+  <h1>Deploy. Build. Extract.</h1>
+  <p>Platform all-in-one untuk deploy website ke Vercel, build APK Android dari URL, dan ekstrak source code HTML website mana pun secara instan — gratis & tanpa batas.</p>
+  <div class="hero-chips">
+    <div class="chip"><i class="fa-solid fa-bolt"></i> Fast Deploy</div>
+    <div class="chip"><i class="fa-brands fa-android"></i> Web2APK</div>
+    <div class="chip"><i class="fa-solid fa-code"></i> HTML Extractor</div>
+    <div class="chip"><i class="fa-solid fa-cloud"></i> Vercel Hosting</div>
+    <div class="chip"><i class="fa-solid fa-shield-halved"></i> Free Forever</div>
+    <div class="chip"><i class="fa-solid fa-globe"></i> Global CDN</div>
+  </div>
+</div>
+
+<!-- ════ MAIN CONTAINER ════ -->
+<div class="container">
+
+  <!-- ══ HOME ══ -->
+  <div class="section active" id="sec-home">
+    <div class="card card-glow-blue">
+      <div class="card-header">
+        <div class="card-icon icon-blue"><i class="fa-solid fa-rocket"></i></div>
+        <div>
+          <div class="card-title">Selamat Datang di Web2APK Pro</div>
+          <div class="card-sub">Platform deploy & build terlengkap, tercepat, gratis</div>
+        </div>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="feat-num">1</div>
+          <div class="feat-text">
+            <strong><i class="fa-solid fa-bolt" style="color:var(--accent);margin-right:4px;"></i>Deploy Website</strong><br>
+            <span>Upload file HTML dan deploy langsung ke Vercel dengan subdomain .vercel.app gratis. Proses hanya 5–15 detik.</span>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num">2</div>
+          <div class="feat-text">
+            <strong><i class="fa-brands fa-android" style="color:var(--accent3);margin-right:4px;"></i>Build APK Android</strong><br>
+            <span>Konversi URL website apa pun menjadi file APK Android siap install menggunakan teknologi WebView native.</span>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num">3</div>
+          <div class="feat-text">
+            <strong><i class="fa-solid fa-magnifying-glass-code" style="color:var(--accent2);margin-right:4px;"></i>Ekstrak Source HTML</strong><br>
+            <span>Scan dan unduh seluruh source code frontend website target. Lihat, copy, atau download sebagai .html file.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid-4" style="margin-bottom:14px;">
+      <div class="stat-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label"><i class="fa-solid fa-key" style="color:var(--accent);margin-right:4px;"></i>Vercel Keys</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label"><i class="fa-solid fa-infinity" style="color:var(--accent2);margin-right:4px;"></i>Free Deploys</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&lt;10s</div>
+        <div class="stat-label"><i class="fa-solid fa-clock" style="color:var(--accent3);margin-right:4px;"></i>Deploy Time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label"><i class="fa-solid fa-shield-halved" style="color:var(--green);margin-right:4px;"></i>Free Plan</div>
+      </div>
+    </div>
+
+    <div class="card card-glow-cyan">
+      <div class="card-header">
+        <div class="card-icon icon-cyan"><i class="fa-solid fa-star"></i></div>
+        <div>
+          <div class="card-title">Kenapa Pilih Web2APK Pro?</div>
+          <div class="card-sub">Keunggulan platform kami</div>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--accent);"><i class="fa-solid fa-bolt"></i></div>
+          <div class="info-card-title">Deployment Instan</div>
+          <div class="info-card-desc">Deploy website ke CDN global Vercel dalam waktu kurang dari 15 detik. Tidak perlu akun Vercel.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--accent3);"><i class="fa-brands fa-android"></i></div>
+          <div class="info-card-title">APK Native WebView</div>
+          <div class="info-card-desc">Buat APK Android dari URL apapun. Aplikasi menggunakan WebView sehingga tampil persis seperti website aslinya.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--green);"><i class="fa-solid fa-dollar-sign"></i></div>
+          <div class="info-card-title">100% Gratis</div>
+          <div class="info-card-desc">Semua fitur tersedia tanpa biaya, tanpa iklan, tanpa limit tersembunyi, dan tanpa registrasi.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--accent2);"><i class="fa-solid fa-lock"></i></div>
+          <div class="info-card-title">Aman & Private</div>
+          <div class="info-card-desc">File HTML tidak disimpan di server kami. Proses langsung ke Vercel API tanpa perantara.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--orange);"><i class="fa-solid fa-globe"></i></div>
+          <div class="info-card-title">Global CDN</div>
+          <div class="info-card-desc">Website yang di-deploy otomatis tersebar ke edge network Vercel di 30+ region di seluruh dunia.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon" style="color:var(--pink);"><i class="fa-solid fa-code"></i></div>
+          <div class="info-card-title">HTML Extractor</div>
+          <div class="info-card-desc">Scan source code website manapun dengan satu klik. Cocok untuk belajar, analisis, atau backup konten.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-glow-purple">
+      <div class="card-header">
+        <div class="card-icon icon-purple"><i class="fa-solid fa-diagram-project"></i></div>
+        <div>
+          <div class="card-title">Cara Kerja Platform</div>
+          <div class="card-sub">Simple, cepat, dan transparan</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title"><i class="fa-solid fa-file-code" style="color:var(--accent);margin-right:6px;"></i>Pilih Fitur</div>
+            <div class="step-desc">Pilih Deploy Web, APK Builder, atau HTML Extractor via menu di bawah.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title"><i class="fa-solid fa-upload" style="color:var(--accent2);margin-right:6px;"></i>Input Data</div>
+            <div class="step-desc">Upload file HTML, masukkan URL website, atau isi detail APK yang ingin dibuild.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title"><i class="fa-solid fa-gears" style="color:var(--accent3);margin-right:6px;"></i>Proses Otomatis</div>
+            <div class="step-desc">Platform akan memproses permintaan kamu dan menampilkan progress secara real-time.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title"><i class="fa-solid fa-circle-check" style="color:var(--green);margin-right:6px;"></i>Hasil Instan</div>
+            <div class="step-desc">Dapatkan URL deploy, link download APK, atau source code HTML langsung tanpa delay.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DEPLOY ══ -->
+  <div class="section" id="sec-deploy">
+    <div class="sec-title">Deploy Website</div>
+    <div class="sec-desc">Upload file HTML dan deploy ke Vercel dalam hitungan detik. Gratis & tanpa akun.</div>
+
+    <div class="card card-glow-blue">
+      <div class="card-header">
+        <div class="card-icon icon-blue"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+          <div class="card-title">Vercel Static Deploy</div>
+          <div class="card-sub">Powered by system.js — deployToVercel()</div>
+        </div>
+      </div>
+
+      <label>Nama Website</label>
+      <div class="input-wrap">
+        <input type="text" id="projName" placeholder="Contoh: toko-online-ku" maxlength="50"/>
+        <i class="fa-solid fa-tag"></i>
+      </div>
+
+      <label>File HTML</label>
+      <div class="file-zone" id="fileZone" onclick="document.getElementById('htmlFile').click()">
+        <input type="file" id="htmlFile" accept=".html,.htm" style="display:none;" onchange="onFileSelect(this)"/>
+        <div class="file-zone-icon"><i class="fa-solid fa-file-code"></i></div>
+        <div class="file-zone-title" id="fileZoneTitle">Klik atau drag & drop file HTML di sini</div>
+        <div class="file-zone-sub">Mendukung .html dan .htm · Max 5MB</div>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="deployBtn" onclick="startDeploy()">
+        <i class="fa-solid fa-rocket"></i> Deploy ke Vercel
+      </button>
+    </div>
+
+    <div class="progress-wrap" id="deployProgress">
+      <div class="progress-status"><div class="spinner"></div><span id="deployStatus">Mempersiapkan...</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="deployBar"></div></div>
+      <div class="progress-pct" id="deployPct">0%</div>
+    </div>
+
+    <div class="result-box" id="deployResult">
+      <div class="result-url" id="deployUrl">https://...</div>
+      <div class="result-meta">
+        <div class="meta-item"><div class="meta-label">Project Name</div><div class="meta-val" id="deployProjName">—</div></div>
+        <div class="meta-item"><div class="meta-label">Deploy Time</div><div class="meta-val" id="deployTime">—</div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+        <a class="btn btn-green" id="openSiteBtn" href="#" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Website</a>
+        <button class="btn btn-secondary" onclick="copyUrl()"><i class="fa-solid fa-copy"></i> Copy URL</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px;">
+      <div class="card-header" style="margin-bottom:12px;">
+        <div class="card-icon icon-cyan"><i class="fa-solid fa-circle-info"></i></div>
+        <div>
+          <div class="card-title">Tentang Deploy System</div>
+          <div class="card-sub">File: system.js → deployToVercel()</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+        System deploy menggunakan <span class="tag tag-blue">system.js</span> dengan fungsi <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:5px;font-size:11px;">deployToVercel()</code>.
+        API key Vercel dirotasi otomatis via <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:5px;font-size:11px;">getVercelToken()</code> untuk menghindari rate limit.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APK BUILDER ══ -->
+  <div class="section" id="sec-apk">
+    <div class="sec-title">APK Builder</div>
+    <div class="sec-desc">Konversi URL website menjadi APK Android. Powered by system.js build & result API.</div>
+
+    <div class="card card-glow-purple">
+      <div class="card-header">
+        <div class="card-icon icon-purple"><i class="fa-brands fa-android"></i></div>
+        <div>
+          <div class="card-title">Web to APK Converter</div>
+          <div class="card-sub">Powered by system.js — startApkBuild()</div>
+        </div>
+      </div>
+
+      <label>Nama Aplikasi</label>
+      <div class="input-wrap">
+        <input type="text" id="apkName" placeholder="Contoh: Toko Online Ku"/>
+        <i class="fa-solid fa-mobile-screen"></i>
+      </div>
+
+      <label>URL Website</label>
+      <div class="input-wrap">
+        <input type="url" id="apkUrl" placeholder="https://example.com"/>
+        <i class="fa-solid fa-globe"></i>
+      </div>
+
+      <label>URL Icon Aplikasi (opsional)</label>
+      <div class="input-wrap">
+        <input type="url" id="apkIcon" placeholder="https://example.com/icon.png"/>
+        <i class="fa-solid fa-image"></i>
+      </div>
+
+      <button class="btn btn-purple btn-full" id="apkBtn" onclick="startApkBuild()">
+        <i class="fa-brands fa-android"></i> Build APK Sekarang
+      </button>
+      <button class="btn btn-danger btn-full" id="apkCancelBtn" onclick="cancelBuild()" style="margin-top:8px;display:none;">
+        <i class="fa-solid fa-xmark"></i> Batalkan Build
+      </button>
+    </div>
+
+    <div class="progress-wrap" id="apkProgress">
+      <div class="progress-status"><div class="spinner"></div><span id="apkStatus">Menghubungkan ke build server...</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="apkBar"></div></div>
+      <div class="progress-pct" id="apkPct">0%</div>
+    </div>
+
+    <div class="result-box" id="apkResult">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <i class="fa-solid fa-circle-check" style="color:var(--green);font-size:18px;"></i>
+        <span style="font-weight:600;font-size:14px;">APK Berhasil Dibuild!</span>
+      </div>
+      <div class="result-meta" style="margin-bottom:12px;">
+        <div class="meta-item"><div class="meta-label">App Name</div><div class="meta-val" id="apkResultName">—</div></div>
+        <div class="meta-item"><div class="meta-label">Job ID</div><div class="meta-val" id="apkResultJob">—</div></div>
+      </div>
+      <a class="btn btn-green btn-full" id="apkDownloadBtn" href="#" target="_blank">
+        <i class="fa-solid fa-download"></i> Download APK
+      </a>
+    </div>
+
+    <div class="result-box error" id="apkError">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <i class="fa-solid fa-circle-xmark" style="color:var(--red);font-size:18px;"></i>
+        <span style="font-weight:600;font-size:14px;color:var(--red);">Build Gagal</span>
+      </div>
+      <div class="result-url err" id="apkErrMsg">—</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="margin-bottom:12px;">
+        <div class="card-icon icon-purple"><i class="fa-solid fa-circle-info"></i></div>
+        <div>
+          <div class="card-title">Tentang APK System</div>
+          <div class="card-sub">File: system.js → startApkBuild()</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+        Build API: <span class="tag tag-purple">build.js</span> — memulai proses build dan mengembalikan <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:5px;font-size:11px;">jobId</code>.<br>
+        Result API: <span class="tag tag-purple">result.js</span> — di-poll setiap 10 detik untuk cek status build.
+        API key disimpan di <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:5px;font-size:11px;">system.js → APK_CONFIG.apikey</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HTML EXTRACTOR ══ -->
+  <div class="section" id="sec-crawl">
+    <div class="sec-title">HTML Extractor</div>
+    <div class="sec-desc">Scan dan ekstrak source code HTML dari website mana pun. Powered by devtools.js & system.js.</div>
+
+    <div class="card card-glow-cyan">
+      <div class="card-header">
+        <div class="card-icon icon-cyan"><i class="fa-solid fa-code"></i></div>
+        <div>
+          <div class="card-title">Source Code Scanner</div>
+          <div class="card-sub">Powered by devtools.js — getHtmlSource()</div>
+        </div>
+      </div>
+
+      <label>URL Website Target</label>
+      <div class="input-wrap">
+        <input type="url" id="crawlUrl" placeholder="https://example.com"/>
+        <i class="fa-solid fa-magnifying-glass-code"></i>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="crawlBtn" onclick="startCrawl()">
+        <i class="fa-solid fa-magnifying-glass-code"></i> Scan & Ekstrak Source Code
+      </button>
+    </div>
+
+    <div class="progress-wrap" id="crawlProgress">
+      <div class="progress-status"><div class="spinner"></div><span id="crawlStatus">Menghubungkan ke server target...</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="crawlBar"></div></div>
+      <div class="progress-pct" id="crawlPct">0%</div>
+    </div>
+
+    <div class="crawl-result" id="crawlResult">
+      <div class="code-wrap show">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename" id="crawlFilename">index.html</span>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;" onclick="copyCrawlCode()">
+              <i class="fa-solid fa-copy"></i> Copy
+            </button>
+            <button class="btn btn-primary" style="padding:6px 12px;font-size:12px;" onclick="downloadHtml()">
+              <i class="fa-solid fa-download"></i> Download
+            </button>
+          </div>
+        </div>
+        <div class="code-content" id="crawlCode"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="margin-bottom:12px;">
+        <div class="card-icon icon-cyan"><i class="fa-solid fa-circle-info"></i></div>
+        <div>
+          <div class="card-title">Tentang Extractor System</div>
+          <div class="card-sub">File: devtools.js + system.js</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+        Extractor menggunakan <span class="tag tag-blue">devtools.js</span> untuk crawling lengkap (Node.js) atau
+        <span class="tag tag-blue">system.js → extractHtmlSource()</span> untuk fetch cepat single-page via proxy.
+        Proxy: <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:5px;font-size:11px;">allorigins.win</code> — bypass CORS tanpa server.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <div class="section" id="sec-about">
+    <div class="sec-title">Tentang Platform</div>
+    <div class="sec-desc">Web2APK Pro — platform open, gratis, dan transparan untuk developer & kreator.</div>
+
+    <div class="card card-glow-blue">
+      <div class="card-header">
+        <div class="card-icon icon-blue"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+          <div class="card-title">Struktur File System</div>
+          <div class="card-sub">Arsitektur modular Web2APK Pro</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="feat-item">
+          <div class="feat-num" style="background:linear-gradient(135deg,var(--accent),var(--accent2));"><i class="fa-solid fa-file-code" style="font-size:11px;"></i></div>
+          <div class="feat-text">
+            <strong>index.html</strong><br>
+            <span>Tampilan utama — topbar (atas) + navbar (bawah) + semua halaman/section. Font Poppins. Terintegrasi semua modul.</span>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num" style="background:linear-gradient(135deg,var(--accent2),var(--accent3));"><i class="fa-solid fa-gear" style="font-size:11px;"></i></div>
+          <div class="feat-text">
+            <strong>system.js</strong><br>
+            <span>Core system — APK_CONFIG (apikey, build.js, result.js), startApkBuild(), deployToVercel(), extractHtmlSource(), getVercelToken().</span>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num" style="background:linear-gradient(135deg,var(--accent3),var(--pink));"><i class="fa-solid fa-terminal" style="font-size:11px;"></i></div>
+          <div class="feat-text">
+            <strong>devtools.js</strong><br>
+            <span>HTML Extractor & Crawler — crawl(), getHtmlSource(), downloadFile(), extractLinks(). Node.js full-site scraper + ZIP output.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-glow-cyan">
+      <div class="card-header">
+        <div class="card-icon icon-cyan"><i class="fa-solid fa-microchip"></i></div>
+        <div>
+          <div class="card-title">Tech Stack</div>
+          <div class="card-sub">Teknologi yang digunakan</div>
+        </div>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item"><i class="fa-brands fa-html5" style="color:#e34f26;"></i><span>HTML5</span></div>
+        <div class="tech-item"><i class="fa-brands fa-css3-alt" style="color:#1572b6;"></i><span>CSS3</span></div>
+        <div class="tech-item"><i class="fa-brands fa-js" style="color:#f7df1e;"></i><span>JavaScript</span></div>
+        <div class="tech-item"><i class="fa-brands fa-node-js" style="color:#68a063;"></i><span>Node.js</span></div>
+        <div class="tech-item"><i class="fa-solid fa-cloud" style="color:#74b9ff;"></i><span>Vercel API</span></div>
+        <div class="tech-item"><i class="fa-brands fa-android" style="color:#3ddc84;"></i><span>WebView APK</span></div>
+        <div class="tech-item"><i class="fa-solid fa-font" style="color:#fff;"></i><span>Poppins</span></div>
+        <div class="tech-item"><i class="fa-solid fa-shield-halved" style="color:#a29bfe;"></i><span>allorigins</span></div>
+        <div class="tech-item"><i class="fa-solid fa-box-archive" style="color:#fdcb6e;"></i><span>archiver</span></div>
+      </div>
+    </div>
+
+    <div class="card card-glow-purple">
+      <div class="card-header">
+        <div class="card-icon icon-purple"><i class="fa-solid fa-circle-question"></i></div>
+        <div>
+          <div class="card-title">FAQ</div>
+          <div class="card-sub">Pertanyaan yang sering ditanyakan</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah website yang di-deploy permanen? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-a">Vercel free tier menyimpan deployment tanpa batas waktu selama project aktif. URL akan tetap bisa diakses.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Berapa lama proses build APK? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-a">Biasanya 1–3 menit tergantung kompleksitas website dan beban server. Progress ditampilkan secara real-time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah HTML Extractor bisa scan semua website? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-a">Sebagian besar website bisa di-scan. Website dengan proteksi Cloudflare ketat atau login-wall mungkin tidak bisa diakses.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Di mana API key disimpan? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-a">Semua API key (Vercel tokens, APK apikey) disimpan di file system.js dalam konstanta APK_CONFIG dan VERCEL_TOKENS.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ════ NAVBAR (bawah) ════ -->
+<nav class="navbar" id="navbar">
+  <button class="nav-item active" id="nav-home" onclick="switchSection('home')">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+  <button class="nav-item" id="nav-deploy" onclick="switchSection('deploy')">
+    <i class="fa-solid fa-bolt"></i>
+    <span>Deploy</span>
+  </button>
+  <button class="nav-item" id="nav-apk" onclick="switchSection('apk')">
+    <i class="fa-brands fa-android"></i>
+    <span>APK</span>
+  </button>
+  <button class="nav-item" id="nav-crawl" onclick="switchSection('crawl')">
+    <i class="fa-solid fa-code"></i>
+    <span>Extract</span>
+  </button>
+  <button class="nav-item" id="nav-about" onclick="switchSection('about')">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>About</span>
+  </button>
+</nav>
+
+<!-- ════ SCRIPT ════ -->
+<script src="system.js"></script>
+<script>
+
+// ─── Inline fallback — system.js config (jika dipakai standalone) ───
+// Jika system.js di-load terpisah, variabel ini otomatis dari sana.
+// Jika tidak, kita define fallback di sini:
+if (typeof APK_CONFIG === 'undefined') {
+  window.APK_CONFIG = {
+    apikey    : 'KeyNoah',
+    build_api : 'https://web-build-navy-zeta.vercel.app/api/build.js',
+    result_api: 'https://web-build-navy-zeta.vercel.app/api/result.js',
+  };
+}
+if (typeof VERCEL_TOKENS === 'undefined') {
+  window.VERCEL_TOKENS = [
+    'IHtNSFLiFVxB82X3aWkXI6xS',
+    '2pBETEiPjhtjGXFWM77jMo0C',
+    'gOFb5AtmpEkVGqvpGCGmcZoD',
+  ];
+  window._vercelKeyIdx = 0;
+  window.getVercelToken = function() {
+    const t = window.VERCEL_TOKENS[window._vercelKeyIdx % window.VERCEL_TOKENS.length];
+    window._vercelKeyIdx++;
+    return t;
+  };
+}
+
+const delay = ms => new Promise(r => setTimeout(r, ms));
+
+// ─── SECTION SWITCH ─────────────────────────
+function switchSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + name);
+  const nav = document.getElementById('nav-' + name);
+  if (sec) sec.classList.add('active');
+  if (nav) nav.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── PROGRESS ───────────────────────────────
+function setProgress(barId, pctId, statusId, pct, msg) {
+  const bar = document.getElementById(barId);
+  const pctEl = document.getElementById(pctId);
+  const statusEl = document.getElementById(statusId);
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (statusEl) statusEl.textContent = msg;
+}
+function showProgress(id) { document.getElementById(id)?.classList.add('show'); }
+function hideProgress(id) { document.getElementById(id)?.classList.remove('show'); }
+function showResult(id)   { document.getElementById(id)?.classList.add('show'); }
+function hideResult(id)   { document.getElementById(id)?.classList.remove('show'); }
+
+// ─── TOAST ──────────────────────────────────
+function showToast(msg, type = 'info') {
+  const wrap = document.getElementById('toastWrap');
+  const el   = document.createElement('div');
+  const icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-xmark' : 'fa-circle-info';
+  el.className = `toast ${type}`;
+  el.innerHTML = `<i class="fa-solid ${icon} t-icon"></i><span>${msg}</span>`;
+  wrap.appendChild(el);
+  setTimeout(() => { el.classList.add('toast-out'); setTimeout(() => el.remove(), 300); }, 3200);
+}
+
+// ─── PARTICLES ──────────────────────────────
+(function initParticles() {
+  const canvas = document.getElementById('particleCanvas');
+  const ctx    = canvas.getContext('2d');
+  let   W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < 55; i++) {
+    particles.push({
+      x: Math.random() * 1920,
+      y: Math.random() * 1080,
+      r: Math.random() * 1.4 + 0.3,
+      dx: (Math.random() - 0.5) * 0.4,
+      dy: (Math.random() - 0.5) * 0.4,
+      o: Math.random() * 0.5 + 0.15,
+      c: ['#3b82f6','#06b6d4','#8b5cf6','#22c55e','#ec4899'][Math.floor(Math.random() * 5)],
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = p.o;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ─── CLICK SPARK ────────────────────────────
+document.addEventListener('click', e => {
+  const spark = document.createElement('div');
+  spark.className = 'click-spark';
+  spark.style.left = e.clientX + 'px';
+  spark.style.top  = e.clientY + 'px';
+  document.getElementById('sparks').appendChild(spark);
+  setTimeout(() => spark.remove(), 500);
+});
+
+// ─── FILE ZONE ──────────────────────────────
+function onFileSelect(input) {
+  if (input.files[0]) {
+    document.getElementById('fileZoneTitle').textContent = '📄 ' + input.files[0].name;
+    showToast('File dipilih: ' + input.files[0].name, 'info');
+  }
+}
+const fz = document.getElementById('fileZone');
+if (fz) {
+  fz.addEventListener('dragover', e => { e.preventDefault(); fz.classList.add('drag-over'); });
+  fz.addEventListener('dragleave', () => fz.classList.remove('drag-over'));
+  fz.addEventListener('drop', e => {
+    e.preventDefault(); fz.classList.remove('drag-over');
+    const f = e.dataTransfer.files[0];
+    if (f && (f.name.endsWith('.html') || f.name.endsWith('.htm'))) {
+      const dt = new DataTransfer(); dt.items.add(f);
+      document.getElementById('htmlFile').files = dt.files;
+      document.getElementById('fileZoneTitle').textContent = '📄 ' + f.name;
+      showToast('File di-drop: ' + f.name, 'info');
+    } else {
+      showToast('Hanya file .html yang diterima', 'error');
+    }
+  });
+}
+
+// ════════════════════════════════════════════
+//   DEPLOY (menggunakan system.js / fallback inline)
+// ════════════════════════════════════════════
+let lastDeployUrl = '';
+async function startDeploy() {
+  const fileInput = document.getElementById('htmlFile');
+  const projName  = document.getElementById('projName').value.trim();
+  const file      = fileInput.files[0];
+  if (!file)      { showToast('Pilih file HTML terlebih dahulu', 'error'); return; }
+  if (!projName)  { showToast('Masukkan nama website', 'error'); return; }
+
+  const btn = document.getElementById('deployBtn');
+  btn.disabled = true;
+  hideResult('deployResult');
+  showProgress('deployProgress');
+
+  try {
+    // Gunakan system.js jika tersedia, fallback inline jika tidak
+    if (typeof deployToVercel === 'function') {
+      const result = await deployToVercel(file, projName, (msg, pct) => {
+        setProgress('deployBar','deployPct','deployStatus', pct, msg);
+      });
+      setProgress('deployBar','deployPct','deployStatus', 100, '✅ Deployment selesai!');
+      await delay(500);
+      hideProgress('deployProgress');
+      lastDeployUrl = result.url;
+      document.getElementById('deployUrl').textContent       = result.url;
+      document.getElementById('deployProjName').textContent  = result.name;
+      document.getElementById('deployTime').textContent      = new Date().toLocaleTimeString('id-ID');
+      document.getElementById('openSiteBtn').href            = result.url;
+      showResult('deployResult');
+      showToast('Website berhasil di-deploy! 🎉', 'success');
+    } else {
+      // Inline fallback
+      await _deployInline(file, projName);
+    }
+  } catch(err) {
+    hideProgress('deployProgress');
+    showToast('Gagal deploy: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function _deployInline(file, projName) {
+  const steps = [
+    [10,'Membaca file HTML...'],
+    [30,'Menyusun konfigurasi Vercel...'],
+    [55,'Mengunggah ke cloud...'],
+    [80,'Menghubungkan domain...'],
+    [95,'Finalisasi...'],
+  ];
+  let si = 0;
+  const iv = setInterval(() => {
+    if (si < steps.length - 1) { setProgress('deployBar','deployPct','deployStatus',steps[si][0],steps[si][1]); si++; }
+  }, 900);
+
+  const html      = await file.text();
+  const slug      = projName.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-');
+  const uname     = `${slug}-${Math.random().toString(36).slice(2,6)}`;
+  const htmlB64   = btoa(unescape(encodeURIComponent(html)));
+  const cfg       = {version:2,name:uname,builds:[{src:'index.html',use:'@vercel/static'}],routes:[{src:'/(.*)',dest:'/index.html'}]};
+  const cfgB64    = btoa(JSON.stringify(cfg));
+  const payload   = {name:uname,files:[{file:'index.html',data:htmlB64,encoding:'base64'},{file:'vercel.json',data:cfgB64,encoding:'base64'}],projectSettings:{framework:null,devCommand:null,installCommand:null,buildCommand:null,outputDirectory:'.',rootDirectory:null}};
+  const token     = window.getVercelToken ? window.getVercelToken() : 'IHtNSFLiFVxB82X3aWkXI6xS';
+
+  const res = await fetch('https://api.vercel.com/v13/deployments', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
+    body:JSON.stringify(payload),
+  });
+  clearInterval(iv);
+  if (!res.ok) { const e = await res.json(); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+
+  setProgress('deployBar','deployPct','deployStatus',100,'✅ Deployment selesai!');
+  await delay(500);
+  hideProgress('deployProgress');
+
+  lastDeployUrl = `https://${uname}.vercel.app`;
+  document.getElementById('deployUrl').textContent       = lastDeployUrl;
+  document.getElementById('deployProjName').textContent  = uname;
+  document.getElementById('deployTime').textContent      = new Date().toLocaleTimeString('id-ID');
+  document.getElementById('openSiteBtn').href            = lastDeployUrl;
+  showResult('deployResult');
+  showToast('Website berhasil di-deploy! 🎉','success');
+}
+
+function copyUrl() {
+  if (lastDeployUrl) { navigator.clipboard.writeText(lastDeployUrl); showToast('URL berhasil dicopy!', 'success'); }
+}
+
+// ════════════════════════════════════════════
+//   APK BUILD (menggunakan system.js)
+// ════════════════════════════════════════════
+let _cancelBuild = null;
+let _apkPoll     = null;
+
+async function startApkBuild() {
+  const name = document.getElementById('apkName').value.trim();
+  const url  = document.getElementById('apkUrl').value.trim();
+  const icon = document.getElementById('apkIcon').value.trim();
+  if (!name) { showToast('Masukkan nama aplikasi', 'error'); return; }
+  if (!url)  { showToast('Masukkan URL website', 'error'); return; }
+
+  const btn    = document.getElementById('apkBtn');
+  const cancEl = document.getElementById('apkCancelBtn');
+  btn.disabled = true;
+  cancEl.style.display = 'block';
+  hideResult('apkResult'); hideResult('apkError');
+  showProgress('apkProgress');
+
+  const cfg = window.APK_CONFIG || { apikey:'KeyNoah', build_api:'https://web-build-navy-zeta.vercel.app/api/build.js', result_api:'https://web-build-navy-zeta.vercel.app/api/result.js' };
+
+  // Gunakan system.js startApkBuild jika ada
+  if (typeof startApkBuild !== 'undefined' && window.startApkBuild !== startApkBuild) {
+    // function dari system.js
+  }
+
+  try {
+    setProgress('apkBar','apkPct','apkStatus', 5, 'Menghubungkan ke build server...');
+
+    const params = new URLSearchParams({ apikey: cfg.apikey, appName: name, appUrl: url, iconUrl: icon });
+    const res    = await fetch(`${cfg.build_api}?${params}`);
+    const build  = await res.json();
+
+    if (!build?.success) throw new Error(build?.message || 'Build gagal dimulai');
+
+    const jobId   = build.jobId;
+    document.getElementById('apkResultJob').textContent  = jobId;
+    document.getElementById('apkResultName').textContent = name;
+
+    let step    = 1;
+    const start = Date.now();
+
+    _apkPoll = setInterval(async () => {
+      step = Math.min(step + 1, 9);
+      const elapsed = Math.floor((Date.now() - start) / 1000);
+      setProgress('apkBar','apkPct','apkStatus', 15 + step * 9, `Membangun APK... (${elapsed}s)`);
+      try {
+        const rRes   = await fetch(`${cfg.result_api}?jobId=${jobId}`);
+        const result = await rRes.json();
+        if (result?.status === 'done') {
+          clearInterval(_apkPoll);
+          setProgress('apkBar','apkPct','apkStatus', 100, '✅ Build selesai!');
+          await delay(400);
+          hideProgress('apkProgress');
+          document.getElementById('apkDownloadBtn').href = result.download;
+          showResult('apkResult');
+          showToast('APK berhasil dibuild! 📱', 'success');
+          btn.disabled = false; cancEl.style.display = 'none';
+        } else if (result?.status === 'error') {
+          clearInterval(_apkPoll);
+          hideProgress('apkProgress');
+          document.getElementById('apkErrMsg').textContent = result.message || 'Unknown error';
+          showResult('apkError');
+          showToast('Build gagal', 'error');
+          btn.disabled = false; cancEl.style.display = 'none';
+        }
+      } catch(e) {}
+    }, 10000);
+
+  } catch(err) {
+    hideProgress('apkProgress');
+    document.getElementById('apkErrMsg').textContent = err.message;
+    showResult('apkError');
+    showToast('Gagal memulai build: ' + err.message, 'error');
+    btn.disabled = false;
+    document.getElementById('apkCancelBtn').style.display = 'none';
+  }
+}
+
+function cancelBuild() {
+  if (_apkPoll) clearInterval(_apkPoll);
+  if (typeof _cancelBuild === 'function') _cancelBuild();
+  hideProgress('apkProgress');
+  document.getElementById('apkBtn').disabled = false;
+  document.getElementById('apkCancelBtn').style.display = 'none';
+  showToast('Build dibatalkan', 'info');
+}
+
+// ════════════════════════════════════════════
+//   HTML EXTRACTOR (via system.js / devtools)
+// ════════════════════════════════════════════
+let crawlHtmlContent = '', crawlTargetUrl = '';
+
+async function startCrawl() {
+  let url = document.getElementById('crawlUrl').value.trim();
+  if (!url) { showToast('Masukkan URL target', 'error'); return; }
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+  const btn = document.getElementById('crawlBtn');
+  btn.disabled = true;
+  document.getElementById('crawlResult').classList.remove('show');
+  showProgress('crawlProgress');
+
+  try {
+    // Coba pakai system.js extractHtmlSource jika ada
+    if (typeof extractHtmlSource === 'function') {
+      const result = await extractHtmlSource(url, (msg, pct) => {
+        setProgress('crawlBar','crawlPct','crawlStatus', pct, msg);
+      });
+      crawlHtmlContent = result.html;
+      crawlTargetUrl   = result.url;
+      hideProgress('crawlProgress');
+      document.getElementById('crawlFilename').textContent = result.hostname + '/index.html';
+      document.getElementById('crawlCode').textContent     = result.html;
+      document.getElementById('crawlResult').classList.add('show');
+      showToast(`Berhasil scan ${result.hostname} 🎉`, 'success');
+    } else {
+      // Inline fallback
+      await _crawlInline(url);
+    }
+  } catch(err) {
+    hideProgress('crawlProgress');
+    showToast('Gagal scan: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function _crawlInline(url) {
+  const steps = [[15,'Menghubungkan ke server target...'],[35,'Menganalisa struktur frontend...'],[55,'Mengumpulkan assets & halaman...'],[75,'Mengekstrak source code...'],[90,'Memproses hasil scan...']];
+  let si = 0;
+  const iv = setInterval(() => { if (si < steps.length) { setProgress('crawlBar','crawlPct','crawlStatus',steps[si][0],steps[si][1]); si++; } }, 700);
+  const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  const res   = await fetch(proxy);
+  const data  = await res.json();
+  clearInterval(iv);
+  if (!data?.contents) throw new Error('Tidak bisa mengakses website ini. Mungkin diblokir firewall.');
+  crawlHtmlContent = data.contents;
+  crawlTargetUrl   = url;
+  setProgress('crawlBar','crawlPct','crawlStatus',100,'✅ Scanning selesai!');
+  await delay(400);
+  hideProgress('crawlProgress');
+  const hostname = new URL(url).hostname;
+  document.getElementById('crawlFilename').textContent = hostname + '/index.html';
+  document.getElementById('crawlCode').textContent     = data.contents;
+  document.getElementById('crawlResult').classList.add('show');
+  showToast(`Berhasil scan ${hostname} 🎉`, 'success');
+}
+
+function copyCrawlCode() {
+  if (crawlHtmlContent) { navigator.clipboard.writeText(crawlHtmlContent); showToast('Source code berhasil dicopy!', 'success'); }
+}
+function downloadHtml() {
+  if (!crawlHtmlContent) return;
+  const blob = new Blob([crawlHtmlContent], { type: 'text/html' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  try { a.download = new URL(crawlTargetUrl).hostname + '_index.html'; } catch { a.download = 'index.html'; }
+  a.click();
+  showToast('File HTML diunduh!', 'success');
+}
+
+// ─── FAQ ────────────────────────────────────
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// ─── TOPBAR SCROLL ──────────────────────────
+window.addEventListener('scroll', () => {
+  const tb = document.getElementById('topbar');
+  if (!tb) return;
+  if (window.scrollY > 20) {
+    tb.style.background   = 'rgba(4,6,16,0.98)';
+    tb.style.borderBottom = '1px solid rgba(99,179,255,0.18)';
+  } else {
+    tb.style.background   = 'rgba(6,9,20,0.88)';
+    tb.style.borderBottom = '1px solid rgba(99,179,255,0.12)';
+  }
+});
+
+</script>
+</body>
+</html>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-weight:400;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-top:calc(var(--topbar-h) + 16px);
+  padding-bottom:calc(var(--navbar-h) + 20px);
+}
+
+/* ─── BG MESH ─── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 8%,rgba(59,130,246,0.09) 0%,transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 85%,rgba(139,92,246,0.09) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 35% at 50% 50%,rgba(6,182,212,0.04) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* ─── PARTICLES ─── */
+#particleCanvas{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* ════════════════════════════════════════
+   TOPBAR (atas — logo + status)
+════════════════════════════════════════ */
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--topbar-h);
+  background:rgba(6,9,20,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(99,179,255,0.12);
+  display:flex;align-items:center;
+  padding:0 20px;
+  z-index:9000;
+  box-shadow:0 2px 24px rgba(0,0,0,0.5);
+  gap:12px;
+}
+.topbar-logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;flex-shrink:0;
+}
+.topbar-logo-icon{
+  width:36px;height:36px;border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:#fff;
+  box-shadow:0 0 14px var(--glow-blue);
+  flex-shrink:0;
+}
+.topbar-logo-text{
+  font-family:var(--font);
+  font-weight:800;font-size:1.05rem;
+  background:linear-gradient(135deg,#fff 40%,var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.topbar-logo-version{
+  font-size:10px;font-family:var(--font);font-weight:600;
+  color:var(--accent2);
+  background:rgba(6,182,212,0.1);
+  border:1px solid rgba(6,182,212,0.25);
+  padding:2px 7px;border-radius:999px;
+  margin-left:2px;
+}
+.topbar-spacer{flex:1;}
+.topbar-right{
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.topbar-badge{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(34,197,94,0.1);
+  border:1px solid rgba(34,197,94,0.25);
+  border-radius:999px;
+  padding:5px 12px;
+  font-size:11px;font-family:var(--font);font-weight:600;
+  color:var(--green);
+}
+.pulse-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+  animation:pulse 2s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+
+/* ════════════════════════════════════════
+   NAVBAR (bawah — navigasi menu)
+════════════════════════════════════════ */
+.navbar{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--navbar-h);
+  background:rgba(6,9,20,0.95);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-top:1px solid rgba(99,179,255,0.14);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 8px;
+  z-index:9000;
+  box-shadow:0 -4px 30px rgba(0,0,0,0.6);
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:8px 16px;border-radius:14px;
+  cursor:pointer;
+  font-family:var(--font);font-size:11px;font-weight:500;
+  border:1px solid transparent;
+  background:transparent;color:var(--muted);
+  transition:all 0.22s;
+  white-space:nowrap;flex:1;max-width:90px;
+}
+.nav-item i{font-size:18px;transition:all 0.2s;}
+.nav-item:hover{color:var(--text);}
+.nav-item.active{
+  background:linear-gradient(135deg,rgba(59,130,246,0.18),rgba(6,182,212,0.12));
+  color:#fff;
+  border-color:rgba(59,130,246,0.28);
+}
+.nav-item.active i{
+  filter:drop-shadow(0 0 6px var(--accent));
+  color:var(--accent2);
+}
+.nav-item span{line-height:1;}
+
+/* ─── CONTAINER ─── */
+.container{
+  position:relative;z-index:1;
+  max-width:820px;
+  margin:0 auto;
+  padding:0 16px;
+}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:36px 20px 28px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(59,130,246,0.1);
+  border:1px solid rgba(59,130,246,0.3);
+  border-radius:999px;
+  padding:5px 16px;
+  font-size:11px;font-family:var(--font);font-weight:600;
+  color:var(--accent2);
+  letter-spacing:0.06em;text-transform:uppercase;
+  margin-bottom:20px;
+  animation:fadeDown 0.6s ease both;
+}
+.hero h1{
+  font-family:var(--font);
+  font-size:clamp(1.9rem,5.5vw,3.4rem);
+  font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#fff 20%,var(--accent) 50%,var(--accent2) 80%,var(--accent3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp 0.7s 0.1s ease both;
+  margin-bottom:12px;
+  filter:drop-shadow(0 0 36px rgba(59,130,246,0.25));
+}
+.hero p{
+  color:var(--muted);font-size:0.95rem;font-weight:400;
+  max-width:540px;margin:0 auto 24px;
+  line-height:1.75;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-chips{
+  display:flex;flex-wrap:wrap;gap:8px;
+  justify-content:center;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+.chip{
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 14px;font-size:12px;font-weight:500;
+  color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+  transition:all 0.2s;cursor:default;
+}
+.chip:hover{
+  background:rgba(59,130,246,0.1);
+  border-color:rgba(59,130,246,0.3);color:var(--text);
+  transform:translateY(-2px);
+}
+.chip i{color:var(--accent);}
+
+/* ─── SECTION ─── */
+.section{display:none;animation:fadeUp 0.35s ease both;}
+.section.active{display:block;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── CARD ─── */
+.card{
+  background:linear-gradient(145deg,var(--card) 0%,rgba(13,18,36,0.96) 100%);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:14px;
+  position:relative;overflow:hidden;
+  transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+  cursor:default;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(59,130,246,0.03) 0%,transparent 50%,rgba(139,92,246,0.02) 100%);
+  pointer-events:none;
+}
+.card::after{
+  content:'';position:absolute;top:-1px;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(59,130,246,0.1);
+  border-color:rgba(99,179,255,0.22);
+}
+.card.card-glow-blue:hover{box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 30px rgba(59,130,246,0.14);}
+.card.card-glow-purple:hover{box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 30px rgba(139,92,246,0.14);}
+.card.card-glow-cyan:hover{box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 30px rgba(6,182,212,0.14);}
+.card.card-glow-green:hover{box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 30px rgba(34,197,94,0.14);}
+
+.card-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.card-icon{
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;flex-shrink:0;position:relative;overflow:hidden;
+}
+.card-icon::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  pointer-events:none;
+}
+.icon-blue{background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(59,130,246,0.1));color:var(--accent);box-shadow:0 4px 16px rgba(59,130,246,0.22);}
+.icon-cyan{background:linear-gradient(135deg,rgba(6,182,212,0.3),rgba(6,182,212,0.1));color:var(--accent2);box-shadow:0 4px 16px rgba(6,182,212,0.22);}
+.icon-purple{background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(139,92,246,0.1));color:var(--accent3);box-shadow:0 4px 16px rgba(139,92,246,0.22);}
+.icon-green{background:linear-gradient(135deg,rgba(34,197,94,0.3),rgba(34,197,94,0.1));color:var(--green);box-shadow:0 4px 16px rgba(34,197,94,0.22);}
+.icon-orange{background:linear-gradient(135deg,rgba(249,115,22,0.3),rgba(249,115,22,0.1));color:var(--orange);box-shadow:0 4px 16px rgba(249,115,22,0.22);}
+.icon-pink{background:linear-gradient(135deg,rgba(236,72,153,0.3),rgba(236,72,153,0.1));color:var(--pink);box-shadow:0 4px 16px rgba(236,72,153,0.22);}
+
+.card-title{font-family:var(--font);font-size:1.08rem;font-weight:700;}
+.card-sub{font-size:0.78rem;color:var(--muted);margin-top:2px;font-weight:400;}
+
+/* ─── INPUTS ─── */
+label{
+  display:block;font-size:11px;font-weight:600;
+  color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.07em;margin-bottom:6px;
+  font-family:var(--font);
+}
+input,textarea,select{
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);border-radius:12px;
+  padding:12px 16px;color:var(--text);
+  font-family:var(--font);font-size:14px;font-weight:400;
+  outline:none;
+  transition:border-color 0.25s,box-shadow 0.25s,background 0.25s,transform 0.15s;
+  margin-bottom:14px;
+}
+input:focus,textarea:focus,select:focus{
+  border-color:rgba(59,130,246,0.55);
+  box-shadow:0 0 0 3px rgba(59,130,246,0.1),0 4px 20px rgba(59,130,246,0.06);
+  background:rgba(59,130,246,0.03);
+  transform:translateY(-1px);
+}
+input::placeholder,textarea::placeholder{color:rgba(107,114,128,0.7);}
+textarea{resize:vertical;min-height:140px;font-family:'Courier New',monospace;font-size:12px;}
+select option{background:var(--card);}
+
+.input-wrap{position:relative;}
+.input-wrap i{
   position:absolute;left:14px;top:40%;transform:translateY(-50%);
   color:var(--muted);font-size:14px;pointer-events:none;transition:color 0.2s;
 }
