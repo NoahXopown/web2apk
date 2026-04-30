@@ -159,23 +159,21 @@ async function deployToVercel(fileOrContent, projectName, onProgress) {
     const projSlug  = projectName.toLowerCase()
         .replace(/[^a-z0-9-]/g, "-")
         .replace(/-+/g, "-")
-        .slice(0, 50);
-    const uniqueName = `${projSlug}-${Math.random().toString(36).slice(2, 6)}`;
+        .slice(0, 40);
+    const uniqueName = `${projSlug}-${Math.random().toString(36).slice(2, 7)}`;
 
-    const htmlB64 = btoa(unescape(encodeURIComponent(htmlContent)));
-    const cfgObj  = {
-        version: 2,
-        name: uniqueName,
-        builds: [{ src: "index.html", use: "@vercel/static" }],
-        routes: [{ src: "/(.*)", dest: "/index.html" }],
-    };
-    const cfgB64 = btoa(JSON.stringify(cfgObj));
+    // ✅ FIX: Encode unicode dengan benar (btoa() tidak support karakter non-latin)
+    const htmlB64 = btoa(
+        encodeURIComponent(htmlContent).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+            String.fromCharCode("0x" + p1)
+        )
+    );
 
+    // ✅ FIX: Hanya kirim index.html — TANPA vercel.json (menyebabkan 404)
     const payload = {
         name : uniqueName,
         files: [
             { file: "index.html", data: htmlB64, encoding: "base64" },
-            { file: "vercel.json", data: cfgB64, encoding: "base64" },
         ],
         projectSettings: {
             framework      : null,
@@ -204,13 +202,20 @@ async function deployToVercel(fileOrContent, projectName, onProgress) {
         throw new Error(err?.error?.message || `HTTP ${res.status}`);
     }
 
-    emit("Menghubungkan domain...", 80);
-    await delay(1200);
+    const data = await res.json();
 
+    emit("Menghubungkan domain...", 85);
+    await delay(800);
     emit("✅ Deployment selesai!", 100);
 
-    const deployUrl = `https://${uniqueName}.vercel.app`;
-    return { url: deployUrl, name: uniqueName };
+    // ✅ FIX: Ambil URL dari response (bukan buat manual)
+    const deployUrl = data.alias && data.alias.length > 0
+        ? `https://${data.alias[0]}`
+        : data.url
+            ? `https://${data.url}`
+            : `https://${uniqueName}.vercel.app`;
+
+    return { url: deployUrl, name: data.name || uniqueName };
 }
 
 // ═══════════════════════════════════════════════
